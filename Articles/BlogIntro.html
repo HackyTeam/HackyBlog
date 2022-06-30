@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../Core/blogStyle.css">
+</head>
+
+<body>
+
+    <a href="https://github.com/HackyTeam/HackySTL" style="text-decoration: none;">
+        <div class="header">
+            <h2 class="white_text"><img style="vertical-align: middle;" src="../Resources/Logo.png"/>, a C++20 standard library</h2>
+        </div>
+    </a>
+
+    <div class="row">
+
+        <div class="left_column">
+            <div class="card">
+                <h2 class="white_text">An this is my blog</h2>
+                <h5 class="white_text">May 18, 2022</h5>
+
+                <img src="../Resources/BlogIntro.png" style="width: 100%;">
+                <p class="white_text">Ok, but why?</p>
+
+                <p class="white_text">
+                    I will be honest, I didn't know how to write a blog. I was
+                    looking for a way to write a blog and I found a template on
+                    <a class="white_text" href="https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_blog_layout">w3schools</a> 
+                    and from there I started to write my own blog.
+                </p>
+
+                <p class="white_text">
+                    So, after grabbing the example code I started modifying it to fit my needs.
+                    I made the background purple, I made the cards a grey shade, which is just
+                    <code class="code_custom">color: rgb(52, 52, 52);</code> in CSS.
+                    I also added a little bit of text to the cards, rounded corners using
+                    <code class="code_custom">border-radius: 15px;</code> and I added a 
+                    resource directory for the images. Presumably, the project logo and 
+                    screenshots of Visual Studio Code.
+                </p>
+
+                <p class="white_text">
+                    I also added a link to the GitHub repository, which is the same as the 
+                    one on the header.
+                </p>
+
+                <p class="white_text">
+                    The most fun part were the About Me section which 
+                    you are seeing sticking on the right side of the page, 
+                    the github integration and the forms at the end of this 
+                    very article.
+                </p>
+
+                <p class="white_text">
+                    The left side of the page is the blog, is 
+                    hold on this position while scrolling using 
+                    <code class="code_custom">position: sticky;</code> 
+                    applied on the whole colum on this table.
+                </p>
+
+                <p class="white_text">
+                    The github integration is done using the code from an open source project 
+                    called <a class="white_text" href="https://github.com/yusanshi/embed-like-gist">emgithub</a> 
+                    which uses MIT license, so we should be able to use it.
+                </p>
+
+                <p class="white_text">
+                    The forms are done using something called
+                    <code class="code_custom">textarea</code> 
+                    tag which can be scrolled vertically. 
+                </p>
+            </div>
+
+            <div class="card">
+                <label class="input-sizer stacked white_text">
+                    <h3 style="margin: 5px;">Feedback:</h3>
+                    <textarea id="feedback_data" oninput="this.parentNode.dataset.value = this.value" rows="1" placeholder="Enter text"></textarea>
+                    <button type="button" onclick="window.location.href = 'https://github.com/HackyTeam/HackyTeam.github.io/issues/new'; return false;">Send feedback!</button> 
+                </label>
+            </div>
+        </div>
+        
+        <div class="right_column" style="position: sticky; top: 0px;">
+            
+            <div class="card">
+                <h2 class="white_text">About Me:</h2>
+
+                <img src="../Resources/Hector.png" style="width:30%; border-radius: 7px;">
+
+                <p class="white_text">
+                    I'm a huge fan of system programming and I like 
+                    to get into the nitty-gritty of computers and this 
+                    is my passion project on which I'm working for almost 2 years.
+                </p>
+            </div>
+            
+            <div class="card">
+                <h3 class="white_text">Follow Me:</h3>
+                
+                <a class="white_text" href="https://github.com/Hector-The-Coder">Github</a><br>
+                <a class="white_text" href="https://www.linkedin.com/in/c%C4%83t%C4%83lin-ioan-nicolau-a6b612230/">LinkedIn</a><br>
+                <a class="white_text" href="https://www.twitch.tv/hectorthecoder">Twitch</a><br>
+                <a class="white_text" href="https://twitter.com/catalin_hsd">Twitter</a>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <a href="../index.html" style="text-decoration: none;">
+        <div class="footer">
+            <h2 class="white_text">Home</h2>
+        </div>
+    </a>
+
+</body>

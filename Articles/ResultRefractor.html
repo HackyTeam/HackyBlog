@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../Core/blogStyle.css">
+</head>
+
+<body>
+
+    <a href="https://github.com/HackyTeam/HackySTL" style="text-decoration: none;">
+        <div class="header">
+            <h2 class="white_text"><img style="vertical-align: middle;" src="../Resources/Logo.png"/>, a C++20 standard library</h2>
+        </div>
+    </a>
+
+    <div class="row">
+
+        <div class="left_column">
+            <div class="card">
+
+                <h2 class="white_text">Refactoring <code class="code_custom">hsd::Result</code></h2>
+                <h5 class="white_text">Cleaning up the mess, May 14, 2022</h5>
+                
+                <img src="../Resources/ResultError.png" style="width: 100%;">
+                <p class="white_text">So, what happened:</p>
+                
+                <p class="white_text">
+                    I come to realize that my Result implementation is a 
+                    mess and it needs to be redone so, that's what I did.
+                </p>
+
+                <p class="white_text">
+                    First thing I've done is to find the header responsible for 
+                    <code class="code_custom">std::construct_at</code> using the
+                    <code class="code_custom">__has_include</code> attribute as seen here: 
+                </p>
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/25ae251102c46a61b813d5d3b40d2580332aca9d/lib/Result.hpp%23L6-L10
+                "></script>
+
+                <p class="white_text">
+                    Which allowed me to finally make the move constructor and 
+                    attribution <code class="code_custom">constexpr</code> :
+                </p>
+
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/25ae251102c46a61b813d5d3b40d2580332aca9d/lib/Result.hpp%23L143-L182
+                "></script>
+
+                <p class="white_text">
+                    You have already observed <code class="code_custom">result</code> in the 
+                    code preview has not the same naming case with the one in the title. That's
+                    because it was rather inconsistent with the rest of the library.
+                </p>
+
+                <p class="white_text">
+                    I's also a good time to note there is now a proper 
+                    <code class="code_custom">std::optional</code> replacement, 
+                    as the Rust team really loves it to name, <code class="code_custom">Option</code>,
+                    named in the snake case fashion and it has a companion which can only store the 
+                    errors called <code class="code_custom">option_err</code>.
+                </p>
+
+                <p class="white_text">
+                    As other improvements done to the Result header I've also implemented functions to mimic the
+                    <code class="code_custom">panic!()</code> and <code class="code_custom">unimplemented!()</code> 
+                    macros from the Rust standard library: 
+                </p>
+
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/25ae251102c46a61b813d5d3b40d2580332aca9d/lib/Result.hpp%23L43-L86
+                "></script>
+
+                <p class="white_text">
+                    How about <code class="code_custom">Result::unwrap()</code> and <code class="code_custom">Result::unwrap_err()</code> ?
+                </p>
+
+                <p class="white_text">
+                    Well, the <code class="code_custom">.unwrap/_err()</code> methods now work in this particular way:
+                </p>
+
+                <p class="white_text">
+                    Check if the object is initialized, if it is, return the value, if it's not, either invoke 
+                    <code class="code_custom">panic()</code> with the message being the string return by the
+                    <code class="code_custom">.pretty_error()</code> method or call the function
+                    <code class="code_custom">panic_type_err&lt;Ok, Err&gt;()</code>, declared as above
+                </p>
+
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/25ae251102c46a61b813d5d3b40d2580332aca9d/lib/Result.hpp%23L206-L226
+                "></script>
+
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/25ae251102c46a61b813d5d3b40d2580332aca9d/lib/Result.hpp%23L285-L298
+                "></script>
+
+            </div>
+
+            <div class="card">
+                <label class="input-sizer stacked white_text">
+                    <h3 style="margin: 5px;">Feedback:</h3>
+                    <textarea id="feedback_data" oninput="this.parentNode.dataset.value = this.value" rows="1" placeholder="Enter text"></textarea>
+                    <button type="button" onclick="window.location.href = 'https://github.com/HackyTeam/HackyTeam.github.io/issues/new'; return false;">Send feedback!</button> 
+                </label>
+            </div>
+        </div>
+        
+        <div class="right_column" style="position: sticky; top: 0px;">
+            
+            <div class="card">
+                <h2 class="white_text">About Me:</h2>
+
+                <img src="../Resources/Hector.png" style="width:30%; border-radius: 7px;">
+
+                <p class="white_text">
+                    I'm a huge fan of system programming and I like 
+                    to get into the nitty-gritty of computers and this 
+                    is my passion project on which I'm working for almost 2 years.
+                </p>
+            </div>
+            
+            <div class="card">
+                <h3 class="white_text">Follow Me:</h3>
+                
+                <a class="white_text" href="https://github.com/Hector-The-Coder">Github</a><br>
+                <a class="white_text" href="https://www.linkedin.com/in/c%C4%83t%C4%83lin-ioan-nicolau-a6b612230/">LinkedIn</a><br>
+                <a class="white_text" href="https://www.twitch.tv/hectorthecoder">Twitch</a><br>
+                <a class="white_text" href="https://twitter.com/catalin_hsd">Twitter</a>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <a href="../index.html" style="text-decoration: none;">
+        <div class="footer">
+            <h2 class="white_text">Home</h2>
+        </div>
+    </a>
+
+</body>

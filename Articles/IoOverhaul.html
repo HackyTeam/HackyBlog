@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="../Core/blogStyle.css">
+</head>
+
+<body>
+
+    <a href="https://github.com/HackyTeam/HackySTL" style="text-decoration: none;">
+        <div class="header">
+            <h2 class="white_text">
+                <img style="vertical-align: middle;" src="../Resources/Logo.png"/>, a C++20 standard library
+            </h2>
+        </div>
+    </a>
+
+    <div class="row">
+        
+        <div class="left_column">
+            
+            <div class="card">
+                
+                <h2 class="white_text">Io Overhaul</h2>
+                <h5 class="white_text">Redoing the file handlers, May 14, 2022</h5>
+                
+                <img src="../Resources/FileOverhaul.png" style="width: 100%;">
+                <p class="white_text">So, what happened:</p>
+                
+                <p class="white_text">
+                    I was thinking about the way I've implemented file IO in the past and 
+                    considering this is not the first time I had to redo the entire thing,
+                    it struck me that I should probably start from scratch as I heavily 
+                    relied on the C implementation of IO, which is not slow compared to 
+                    <code class="code_custom">std::fstream</code> and <code class="code_custom">std::ifstream</code>, 
+                    but I knew that I can make it faster, seeing how <code class="code_custom">libfmt</code> 
+                    performs, and emphasis on the user to control the buffer size, so I've dome that.
+                </p>
+
+                <p class="white_text">
+                    The first thing I had to do is to give the ability to the user to get 
+                    the underlying stream from the file object. Here's the code for that:
+                </p>
+
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/cab6347fcea0f34b0001ae1082b8f3643d681609/lib/Io.hpp%23L419-L422
+                "></script>
+
+                <p class="white_text">
+                    <code class="code_custom">return *this;</code>, what? That's right, I'm returning the
+                    <code class="code_custom">*this</code> pointer, which is the file object itself.
+                    This is the way I can get the underlying stream from the file object.
+                </p>
+
+                <p class="white_text">
+                    But why have you inherited from <code class="code_custom">stream</code>? 
+                    The answer is, I don't know. It made sense to me when I was implementing it.
+                </p>
+
+                <p class="white_text">
+                    Now that the user can access the properties of the underlying 
+                    stream and essentially screw themselves this means we have to
+                    modify the way output and input works. The traditionally 
+                    <code class="code_custom">.print()</code> method is now printing
+                    into the stream rather than the file. So, in order to do that
+                    you have to call the <code class="code_custom">.flush()</code> 
+                    method as well. <code class="code_custom">.print()</code> is 
+                    implemented as such:
+                </p>
+
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/cab6347fcea0f34b0001ae1082b8f3643d681609/lib/Io.hpp%23L530-L602
+                "></script>
+
+                <p class="white_text">
+                    Again, <code class="code_custom">snprintf</code>? Why is that even there if 
+                    you said you are going to replace C IO functions? Well, guess what? Implementing
+                    IO for buffers is very complicated, even more if you want to do floating point numbers,
+                    so I'm instead to use C's buffer IO functions for that which are very fast, the only 
+                    bottleneck are actually the files themselves. File descriptors are very slow to manipulate.
+                </p>
+
+                <p class="white_text">
+                    And the <code class="code_custom">.flush()</code> method is implemented as such:
+                </p>
+
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/cab6347fcea0f34b0001ae1082b8f3643d681609/lib/Io.hpp%23L439-L463
+                "></script>
+
+                <p class="white_text">
+                    The <code class="code_custom">.read()</code> is also implemented differently:
+                </p>
+                
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/cab6347fcea0f34b0001ae1082b8f3643d681609/lib/Io.hpp%23L465-L528
+                "></script>
+
+                <p class="white_text">
+                    And I went to implement the file handlers for unix and windows, 
+                    fun fact: windows also supports file descriptors, but I went 
+                    full on and implemented a windows specific file handler.
+                </p>
+
+                <p class="white_text">UNIX:</p>
+
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/cab6347fcea0f34b0001ae1082b8f3643d681609/lib/Io.hpp%23L250-L382
+                "></script>
+
+                <p class="white_text">And Windows:</p>
+
+                <script src="
+                    ../Core/embed.js?target=HackyTeam/HackySTL/blob/cab6347fcea0f34b0001ae1082b8f3643d681609/lib/Io.hpp%23L19-L248
+                "></script>
+            </div>
+
+            <div class="card">
+                <label class="input-sizer stacked white_text">
+                    <h3 style="margin: 5px;">Feedback:</h3>
+                    <textarea id="feedback_data" oninput="this.parentNode.dataset.value = this.value" rows="1" placeholder="Enter text"></textarea>
+                    <button type="button" onclick="window.location.href = 'https://github.com/HackyTeam/HackyTeam.github.io/issues/new'; return false;">Send feedback!</button> 
+                </label>
+            </div>
+        </div>
+        
+        <div class="right_column" style="position: sticky; top: 0px;">
+            
+            <div class="card">
+                <h2 class="white_text">About Me:</h2>
+
+                <img src="../Resources/Hector.png" style="width:30%; border-radius: 7px;">
+
+                <p class="white_text">
+                    I'm a huge fan of system programming and I like 
+                    to get into the nitty-gritty of computers and this 
+                    is my passion project on which I'm working for almost 2 years.
+                </p>
+            </div>
+            
+            <div class="card">
+                <h3 class="white_text">Follow Me:</h3>
+                
+                <a class="white_text" href="https://github.com/Hector-The-Coder">Github</a><br>
+                <a class="white_text" href="https://www.linkedin.com/in/c%C4%83t%C4%83lin-ioan-nicolau-a6b612230/">LinkedIn</a><br>
+                <a class="white_text" href="https://www.twitch.tv/hectorthecoder">Twitch</a><br>
+                <a class="white_text" href="https://twitter.com/catalin_hsd">Twitter</a>
+            </div>
+        </div>
+    </div>
+
+    <a href="../index.html" style="text-decoration: none;">
+        <div class="footer">
+            <h2 class="white_text">Home</h2>
+        </div>
+    </a>
+
+</body>

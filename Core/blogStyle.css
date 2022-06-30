@@ -1,0 +1,123 @@
+* {
+    box-sizing: border-box;
+}
+
+/* Add a gray background color with some padding */
+body {
+    font-family: Arial;
+    padding: 20px;
+    background: #9904f5;
+}
+
+button {
+    border-radius: 15px;
+    width: fit-content;
+    padding: 0 10px;
+    color: white;
+    margin-top: 10px;
+    border-color: #9904f5;
+    background-color: rgb(52, 52, 52);
+}
+
+code {
+    font-size: 110%;
+    background-color: rgb(32, 32, 32);
+    border-radius: 3px;
+}
+
+textarea {
+    background: rgb(52, 52, 52);
+    color: white;
+    resize: none;
+    margin-top: 10px;
+    height: 200px;
+    width: 100%;
+    border-color: #9904f5;
+    padding: 10px;
+    border-radius: 15px;
+    outline: none;
+}
+
+.white_text {
+    color: white;
+}
+
+/* Header/Blog Title */
+.header {
+    border-radius: 15px;
+    padding: 30px;
+    font-size: 40px;
+    text-align: center;
+    background: rgb(52, 52, 52);
+}
+
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.left_column {
+    float: left;
+    width: 75%;
+}
+
+/* Right column */
+.right_column {
+    float: left;
+    width: 25%;
+    padding-left: 20px;
+}
+
+/* Fake image */
+.fakeimg {
+    background-color: #aaa;
+    width: 100%;
+    padding: 20px;
+}
+
+/* Add a card effect for articles */
+.card {
+    border-radius: 15px;
+    background-color: rgb(52, 52, 52);
+    padding: 20px;
+    margin-top: 20px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+/* Footer */
+.footer {
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+    background: rgb(52, 52, 52);
+    margin-top: 20px;
+}
+
+.input-sizer {
+    display: inline-grid;
+    vertical-align: top;
+    align-items: center;
+    position: relative;
+    border: 0;
+    width: 100%;
+}
+.input-sizer.stacked {
+    align-items: stretch;
+}
+.input-sizer.stacked::after, .input-sizer.stacked input, .input-sizer.stacked textarea {
+    grid-area: 2;
+}
+
+/* Responsive layout - when the screen is less than 800px wide, make the
+ two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 800px) {
+
+    .left_column,
+    .right_column {
+        width: 100%;
+        padding: 0;
+    }
+}
